@@ -10,8 +10,6 @@ export default async (interaction: ButtonInteraction<CacheType>, customId: strin
     const res = await fetch('http://soundboard.ethanshealey.com/api/v1/sounds/' + soundId)
     const sound = await res.json()
 
-    console.log(__dirname + '\\plug.mp3')
-
     const player = createAudioPlayer()
     const resource = createAudioResource(sound.sound.file)
 
