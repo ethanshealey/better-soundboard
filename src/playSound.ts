@@ -1,6 +1,7 @@
 import { ButtonInteraction, CacheType } from "discord.js"
 import { createAudioPlayer, createAudioResource, NoSubscriberBehavior, joinVoiceChannel, AudioPlayerStatus } from "@discordjs/voice"
 import { join } from "./helpers/voiceHelpers"
+import { base64ToFile } from "./helpers/base64"
 
 export default async (interaction: ButtonInteraction<CacheType>, customId: string) => {
     // get sound id
@@ -11,7 +12,10 @@ export default async (interaction: ButtonInteraction<CacheType>, customId: strin
     const sound = await res.json()
 
     const player = createAudioPlayer()
-    const resource = createAudioResource(sound.sound.file)
+
+    const soundFile = await base64ToFile(sound.sound.file)
+
+    const resource = createAudioResource(soundFile)
 
     const connection = await join(interaction)
 
